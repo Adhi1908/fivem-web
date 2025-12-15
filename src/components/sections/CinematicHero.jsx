@@ -17,17 +17,19 @@ const CinematicHero = () => {
         <div ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
             {/* Background Video Layer */}
             <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-black/60 z-10" /> {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-20" />
+                <div className="absolute inset-0 bg-black/40 z-10" /> {/* Darker Overlay for contrast */}
+                {/* Gradient Mesh Overlay */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-background/80 to-background z-20 opacity-60 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-20" />
+
                 <video
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-cover opacity-50"
+                    className="w-full h-full object-cover opacity-60"
                     poster="https://images.unsplash.com/photo-1605218427306-022ba951ddb2?q=80&w=2671&auto=format&fit=crop"
                 >
-                    {/* Placeholder for actual gameplay footage */}
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-city-traffic-at-night-aerial-view-37580-large.mp4" type="video/mp4" />
                 </video>
             </motion.div>

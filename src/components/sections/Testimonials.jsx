@@ -36,15 +36,18 @@ const testimonials = [
 ];
 
 const TestimonialCard = ({ name, role, img, content }) => (
-    <div className="w-[350px] bg-white/5 border border-white/10 p-6 rounded-xl flex-shrink-0 backdrop-blur-sm mr-6 hover:bg-white/10 transition-colors">
-        <p className="text-white/80 mb-6 leading-relaxed italic">"{content}"</p>
-        <div className="flex items-center gap-4">
-            <img src={img} alt={name} className="w-10 h-10 rounded-full" />
+    <div className="w-[400px] bg-black/60 border border-white/10 p-8 rounded-2xl flex-shrink-0 backdrop-blur-xl mr-8 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] group">
+        <div className="flex items-center gap-4 mb-6">
+            <div className="relative">
+                <div className="absolute inset-0 bg-primary blur-lg opacity-20 group-hover:opacity-40 transition-opacity" />
+                <img src={img} alt={name} className="w-16 h-16 rounded-full border-2 border-white/10 relative z-10" />
+            </div>
             <div>
-                <h4 className="text-white font-bold">{name}</h4>
-                <p className="text-primary text-sm">{role}</p>
+                <h4 className="text-white font-bold text-lg font-heading">{name}</h4>
+                <p className="text-primary font-medium tracking-wide text-sm">{role}</p>
             </div>
         </div>
+        <p className="text-white/80 leading-relaxed text-lg font-light">"{content}"</p>
     </div>
 );
 

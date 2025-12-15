@@ -1,36 +1,40 @@
 import React, { useEffect, useRef } from "react";
-import { motion, useInView, useSpring } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
-const AnimatedCounter = ({ value, suffix = "" }) => {
+const AnimatedCounter = ({ value }) => {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true });
-
-    // Parse value (remove non-numeric chars for counting)
+    const inView = useInView(ref, { once: true, margin: "-100px" });
     const numericValue = parseInt(value.toString().replace(/[^0-9]/g, ''));
 
-    // Spring configuration for smooth counting
-    const springValue = useSpring(0, {
-        damping: 30,
-        stiffness: 100,
-        duration: 2
-    });
-
     useEffect(() => {
-        if (inView) {
-            springValue.set(numericValue);
-        }
-    }, [inView, numericValue, springValue]);
+        if (!inView) return;
 
-    // Update text content with formatting
-    useEffect(() => {
-        springValue.on("change", (latest) => {
+        let start = 0;
+        const duration = 2000;
+        const startTime = performance.now();
+
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Ease out quart
+            const ease = 1 - Math.pow(1 - progress, 4);
+
+            const current = Math.floor(ease * numericValue);
+
             if (ref.current) {
-                ref.current.textContent = Math.floor(latest).toLocaleString() + (value.toString().includes('k') ? 'k+' : '+');
+                ref.current.innerText = current.toLocaleString() + (value.toString().includes('k') ? 'k+' : '+') + (value.toString().includes('%') ? '%' : '');
             }
-        });
-    }, [springValue, value]);
 
-    return <span ref={ref} className="tabular-nums font-mono text-primary font-bold">0</span>;
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }, [inView, numericValue, value]);
+
+    return <span ref={ref} className="tabular-nums font-mono text-primary font-bold text-4xl">0</span>;
 };
 
 const stats = [
@@ -42,14 +46,19 @@ const stats = [
 
 const StatsBanner = () => {
     return (
-        <section className="border-y border-white/5 bg-black/40 backdrop-blur-md">
+        <section className="border-y border-white/5 bg-black/40 backdrop-blur-md relative z-40">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
                     {stats.map((stat, idx) => (
-                        <div key={idx} className="py-8 text-center group">
-                            <h3 className="text-3xl md:text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                        <div key={idx} className="py-10 text-center group hover:bg-white/5 transition-colors duration-500">
+                            <motion.div
+                                initial={{ scale: 0.5, opacity: 0 }}
+                                whileInView={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="mb-2"
+                            >
                                 <AnimatedCounter value={stat.value} />
-                            </h3>
+                            </motion.div>
                             <p className="text-sm text-white/40 uppercase tracking-widest font-heading group-hover:text-white transition-colors">
                                 {stat.label}
                             </p>
