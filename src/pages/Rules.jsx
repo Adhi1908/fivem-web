@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AccordionItem } from "@/components/ui/Accordion";
+import ShinyText from "@/components/react-bits/ShinyText";
 import { Scroll, AlertTriangle, ShieldCheck } from "lucide-react";
 
 const ruleSections = [
@@ -37,7 +38,9 @@ const Rules = () => {
     return (
         <div className="pt-32 pb-20 container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-16">
-                <h1 className="text-5xl font-heading font-bold text-white mb-6">Server <span className="text-primary">Rules</span></h1>
+                <h1 className="text-5xl md:text-7xl font-sans font-black text-white mb-6 tracking-widest uppercase drop-shadow-2xl">
+                    Server <ShinyText text="Rules" speed={3} className="text-red-500 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]" />
+                </h1>
                 <p className="text-xl text-muted-foreground">Familiarize yourself with our laws to ensure a great experience for everyone.</p>
             </div>
 

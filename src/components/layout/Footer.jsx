@@ -14,10 +14,9 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="relative z-10 pt-24 pb-12 overflow-hidden border-t border-white/5 bg-black/40 backdrop-blur-xl">
-            {/* Background Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent shadow-[0_0_20px_rgba(0,240,255,0.3)]" />
-            <div className="absolute bottom-0 right-0 p-40 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+        <footer className="relative z-10 pt-32 pb-12 overflow-hidden bg-gradient-to-t from-red-950/40 via-black to-transparent">
+            {/* Soft Ambient Glow - Ultra subtle, dark crimson */}
+            <div className="absolute bottom-0 inset-x-0 h-[600px] bg-gradient-to-t from-red-950/20 to-transparent blur-[120px] pointer-events-none" />
 
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">

@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button } from "@/components/ui/Button";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import ShinyText from "@/components/react-bits/ShinyText";
 import { Check, Star, Crown, Zap } from "lucide-react";
 
 const tiers = [
@@ -33,7 +34,9 @@ const Store = () => {
     return (
         <div className="pt-32 pb-20 container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
-                <h1 className="text-5xl font-heading font-bold text-white mb-6">Support the <span className="text-primary">Server</span></h1>
+                <h1 className="text-5xl md:text-7xl font-sans font-black text-white mb-6 tracking-widest uppercase drop-shadow-2xl">
+                    Support the <ShinyText text="Server" speed={3} className="text-red-500 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]" />
+                </h1>
                 <p className="text-xl text-muted-foreground">All donations go directly towards server costs and development.</p>
             </div>
 

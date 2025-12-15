@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import ShinyText from "@/components/react-bits/ShinyText";
 import { Car, Briefcase, Gavel, Cpu, Home as HomeIcon, Skull, Shield, Zap, Coins } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,9 @@ const Features = () => {
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-6xl md:text-7xl font-heading font-black text-white mb-6 tracking-tighter"
+                    className="text-6xl md:text-8xl font-sans font-black text-white mb-6 tracking-widest uppercase drop-shadow-2xl"
                 >
-                    Server <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Features</span>
+                    Server <ShinyText text="Features" speed={3} className="text-red-500 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]" />
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}

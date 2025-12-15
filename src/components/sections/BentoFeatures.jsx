@@ -58,10 +58,10 @@ const BentoFeatures = () => {
 
                     {/* Large Visual Card */}
                     <SpotlightCard className="md:col-span-3 min-h-[400px] flex items-center justify-center relative overflow-hidden group hover:shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)] border-white/5 bg-black/40 backdrop-blur-md">
-                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                        <div className="relative z-10 text-center p-8">
-                            <h3 className="text-4xl md:text-5xl font-heading font-bold text-white mb-6 drop-shadow-lg">Start Your Legacy</h3>
+
+
+                        <div className="relative z-10 text-center p-8 w-full h-full flex flex-col items-center justify-center">
+                            <h3 className="text-4xl md:text-5xl font-sans font-black text-white mb-6 drop-shadow-lg uppercase tracking-widest">Start Your Legacy</h3>
                             <p className="text-white/80 max-w-xl mx-auto text-xl mb-8 leading-relaxed">From street racer to business mogul, your path is yours to define in a city that never sleeps.</p>
                             <button className="bg-white text-black px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.4)]">
                                 Begin Journey
