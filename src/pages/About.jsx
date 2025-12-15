@@ -11,7 +11,7 @@ const teamForAbout = [
 
 const About = () => {
     return (
-        <div className="pt-20">
+        <div className="pt-32">
             {/* Hero */}
             <section className="relative py-20 overflow-hidden">
                 <div className="container mx-auto px-4 text-center relative z-10">

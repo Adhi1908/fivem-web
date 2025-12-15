@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Rocket } from "lucide-react";
+import { Menu, X, Rocket, Home, Info, Zap, ScrollText, ShoppingBag, MessageSquare } from "lucide-react";
 import { Button } from "../ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -18,12 +18,12 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: "Home", path: "/" },
-        { name: "About", path: "/about" },
-        { name: "Features", path: "/features" },
-        { name: "Rules", path: "/rules" },
-        { name: "Store", path: "/store" },
-        { name: "Contact", path: "/contact" },
+        { name: "Home", path: "/", icon: Home },
+        { name: "About", path: "/about", icon: Info },
+        { name: "Features", path: "/features", icon: Zap },
+        { name: "Rules", path: "/rules", icon: ScrollText },
+        { name: "Store", path: "/store", icon: ShoppingBag },
+        { name: "Contact", path: "/contact", icon: MessageSquare },
     ];
 
     return (
@@ -34,18 +34,20 @@ const Navbar = () => {
             className={cn(
                 "fixed w-full z-50 transition-all duration-300 border-b",
                 scrolled
-                    ? "bg-background/80 backdrop-blur-xl border-white/5 py-4"
+                    ? "bg-black/50 backdrop-blur-2xl border-white/5 py-4 shadow-lg shadow-primary/5 supports-[backdrop-filter]:bg-black/20"
                     : "bg-transparent border-transparent py-6"
             )}
         >
             <div className="container mx-auto px-4 flex justify-between items-center">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-black font-bold text-xl group-hover:rotate-12 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.5)]">
+                    <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform shadow-[0_0_15px_rgba(255,0,0,0.5)] relative overflow-hidden">
                         <Rocket size={24} />
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full blur-[2px]" />
                     </div>
                     <span className="text-2xl font-bold font-heading text-white tracking-tighter">
-                        NEXUS<span className="text-primary">RP</span>
+                        NEXUS<span className="text-red-500">RP</span>
+                        <span className="text-xs ml-2 bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full border border-green-500/30">XMAS</span>
                     </span>
                 </Link>
 
@@ -55,14 +57,28 @@ const Navbar = () => {
                         <Magnetic key={link.name}>
                             <Link
                                 to={link.path}
-                                className="relative text-sm font-medium text-white/70 hover:text-white transition-colors py-2 block px-2"
+                                className={cn(
+                                    "relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300",
+                                    location.pathname === link.path ? "text-purple-400" : "text-white/60 hover:text-white"
+                                )}
                             >
-                                {link.name}
+                                <link.icon size={18} />
+                                <span className="text-sm font-medium">{link.name}</span>
                                 {location.pathname === link.path && (
-                                    <motion.div
-                                        layoutId="underline"
-                                        className="absolute left-0 top-full block h-[2px] w-full bg-primary shadow-[0_0_10px_rgba(0,240,255,0.8)]"
-                                    />
+                                    <>
+                                        {/* Background Glow */}
+                                        <motion.div
+                                            layoutId="activeTab"
+                                            className="absolute inset-0 bg-purple-600/20 rounded-xl -z-10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                        />
+                                        {/* Top Indicator */}
+                                        <motion.div
+                                            layoutId="activeIndicator"
+                                            className="absolute -top-[10px] inset-x-0 mx-auto w-5 h-1 bg-purple-500 rounded-full shadow-[0_0_8px_#a855f7]"
+                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                        />
+                                    </>
                                 )}
                             </Link>
                         </Magnetic>
@@ -73,8 +89,8 @@ const Navbar = () => {
                 <div className="hidden md:block">
                     <Magnetic>
                         <Link to="/apply">
-                            <Button variant="glow" size="sm" className="rounded-full px-6">
-                                Play Now
+                            <Button className="rounded-full px-6 bg-gradient-to-r from-red-600 to-green-600 hover:from-red-500 hover:to-green-500 text-white shadow-[0_0_20px_rgba(255,0,0,0.4)] border-none">
+                                Play Now 🎁
                             </Button>
                         </Link>
                     </Magnetic>
@@ -93,10 +109,11 @@ const Navbar = () => {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "100vh" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10 overflow-hidden"
+                        initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 120 }}
+                        className="md:hidden fixed top-0 right-0 h-screen w-full bg-black/95 backdrop-blur-xl border-l border-white/10 overflow-hidden z-[60]"
                     >
                         <div className="flex flex-col items-center justify-center h-full gap-8 pb-20">
                             {navLinks.map((link, i) => (

@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
 import PageTransition from "./PageTransition";
 import ParticleBackground from "./ParticleBackground";
+import { LoadingScreen } from "@/components/ui/LoadingScreen";
+import Snowfall from "@/components/ui/Snowfall";
 
 const Layout = () => {
+    useEffect(() => {
+        const konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+        let current = 0;
+
+        const handleKey = (e) => {
+            if (e.key === konami[current]) {
+                current++;
+                if (current === konami.length) {
+                    document.documentElement.classList.add('matrix-mode');
+                    current = 0;
+                }
+            } else {
+                current = 0;
+            }
+        };
+
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, []);
+
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
+            <LoadingScreen />
+            <Snowfall />
             {/* Background Ambience */}
             <ParticleBackground />
             <div className="fixed inset-0 z-[-1] pointer-events-none">
@@ -19,7 +43,7 @@ const Layout = () => {
             </div>
 
             <Navbar />
-            <main className="flex-grow pt-20">
+            <main className="flex-grow">
                 <PageTransition>
                     <Outlet />
                 </PageTransition>

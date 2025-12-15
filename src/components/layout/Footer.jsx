@@ -1,81 +1,113 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Gamepad2, Twitter, Youtube, Disc, ArrowRight } from "lucide-react";
 
 const Footer = () => {
+    const [serverOnline, setServerOnline] = useState(true);
+    const [playerCount, setPlayerCount] = useState(342);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPlayerCount(prev => prev + Math.floor(Math.random() * 3 - 1));
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <footer className="bg-black/40 backdrop-blur-lg border-t border-white/10 pt-16 pb-8">
+        <footer className="relative z-10 pt-24 pb-12 overflow-hidden border-t border-white/5 bg-black/40 backdrop-blur-xl">
+            {/* Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent shadow-[0_0_20px_rgba(0,240,255,0.3)]" />
+            <div className="absolute bottom-0 right-0 p-40 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    {/* Brand */}
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                                <Gamepad2 className="text-white w-5 h-5" />
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+                    {/* Brand Section */}
+                    <div className="md:col-span-5 space-y-6">
+                        <Link to="/" className="flex items-center gap-3 group w-fit">
+                            <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border border-white/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                                <Gamepad2 className="text-primary w-6 h-6" />
                             </div>
-                            <span className="text-xl font-heading font-bold text-white">
-                                NEXUS<span className="text-primary">RP</span>
-                            </span>
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
+                            <div className="flex flex-col">
+                                <span className="text-2xl font-heading font-bold text-white tracking-wide">
+                                    NEXUS<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">RP</span>
+                                </span>
+                                <span className="text-xs text-white/40 tracking-widest uppercase">Los Santos Roleplay</span>
+                            </div>
+                        </Link>
+                        <p className="text-muted-foreground leading-relaxed max-w-md text-lg">
                             The ultimate immersive roleplay experience. Join thousands of players in a living, breathing city where your story matters.
                         </p>
-                    </div>
 
-                    {/* Links */}
-                    <div>
-                        <h4 className="text-white font-bold mb-4">Server</h4>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-                            <li><Link to="/rules" className="hover:text-primary transition-colors">Server Rules</Link></li>
-                            <li><Link to="/features" className="hover:text-primary transition-colors">Features</Link></li>
-                            <li><Link to="/status" className="hover:text-primary transition-colors">Server Status</Link></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-white font-bold mb-4">Community</h4>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><a href="#" className="hover:text-primary transition-colors">Discord</a></li>
-                            <li><a href="#" className="hover:text-primary transition-colors">Forums</a></li>
-                            <li><Link to="/apply" className="hover:text-primary transition-colors">Applications</Link></li>
-                            <li><Link to="/support" className="hover:text-primary transition-colors">Support</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Socials */}
-                    {/* Newsletter */}
-                    <div>
-                        <h4 className="text-white font-bold mb-4">Stay Updated</h4>
-                        <p className="text-sm text-muted-foreground mb-4">
-                            Subscribe to our newsletter for server updates and events.
-                        </p>
-                        <div className="flex gap-2 mb-6">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary/50 w-full hover:bg-white/10 transition-colors"
-                            />
-                            <button className="bg-primary hover:bg-primary/90 text-black p-2 rounded-lg transition-colors">
-                                <ArrowRight size={18} />
-                            </button>
+                        {/* Status Widget */}
+                        <div className="inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 px-4 py-2 rounded-full cursor-help relative group">
+                            <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <span className="relative flex h-3 w-3">
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${serverOnline ? 'bg-green-400' : 'bg-red-400'}`}></span>
+                                <span className={`relative inline-flex rounded-full h-3 w-3 ${serverOnline ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                            </span>
+                            <div className="flex flex-col">
+                                <span className="text-xs font-bold text-white uppercase tracking-wider">
+                                    {serverOnline ? 'Systems Operational' : 'Offline'}
+                                </span>
+                                <span className="text-[10px] text-white/50 font-mono">
+                                    {serverOnline ? `${playerCount} Players Online` : 'Maintenance Mode'}
+                                </span>
+                            </div>
                         </div>
-                        <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
-                                <Disc className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
-                                <Twitter className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
-                                <Youtube className="w-5 h-5" />
-                            </a>
+                    </div>
+
+                    {/* Links Column 1 */}
+                    <div className="md:col-span-2 md:col-start-7">
+                        <h4 className="text-white font-bold mb-6 flex items-center gap-2">
+                            <span className="w-1 h-4 bg-primary rounded-full" /> Server
+                        </h4>
+                        <ul className="space-y-4">
+                            {['About Us', 'Server Rules', 'Features', 'Status'].map((item) => (
+                                <li key={item}>
+                                    <Link to={`/${item.toLowerCase().replace(' ', '-')}`} className="text-muted-foreground hover:text-white hover:translate-x-1 transition-all duration-300 block text-sm">
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Links Column 2 */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-bold mb-6 flex items-center gap-2">
+                            <span className="w-1 h-4 bg-secondary rounded-full" /> Community
+                        </h4>
+                        <ul className="space-y-4">
+                            {['Discord', 'Forums', 'Applications', 'Support'].map((item) => (
+                                <li key={item}>
+                                    <Link to="#" className="text-muted-foreground hover:text-white hover:translate-x-1 transition-all duration-300 block text-sm">
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Socials & Newsletter */}
+                    <div className="md:col-span-2">
+                        <h4 className="text-white font-bold mb-6">Connect</h4>
+                        <div className="flex gap-3 mb-8">
+                            {[Disc, Twitter, Youtube].map((Icon, i) => (
+                                <a key={i} href="#" className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-primary/20 hover:border-primary/30 transition-all duration-300 group">
+                                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-white/10 pt-8 text-center text-sm text-muted-foreground">
-                    <p>© 2024 Nexus Roleplay. All rights reserved. Not affiliated with Rockstar Games.</p>
+                {/* Bottom Bar */}
+                <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+                    <p>© 2024 Nexus Roleplay. All rights reserved.</p>
+                    <div className="flex gap-6">
+                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </footer>

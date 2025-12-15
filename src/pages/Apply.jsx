@@ -8,7 +8,7 @@ const Apply = () => {
 
     if (submitted) {
         return (
-            <div className="pt-24 pb-20 container mx-auto px-4 text-center min-h-[60vh] flex flex-col items-center justify-center">
+            <div className="pt-32 pb-20 container mx-auto px-4 text-center min-h-[60vh] flex flex-col items-center justify-center">
                 <h2 className="text-4xl font-heading font-bold text-white mb-4">Application Submitted!</h2>
                 <p className="text-muted-foreground mb-8">Roleplay is about patience. Please allow 24-48 hours for our staff to review your application.</p>
                 <Button onClick={() => setSubmitted(false)} variant="outline">Submit Another</Button>
@@ -17,7 +17,7 @@ const Apply = () => {
     }
 
     return (
-        <div className="pt-24 pb-20 container mx-auto px-4 max-w-2xl">
+        <div className="pt-32 pb-20 container mx-auto px-4 max-w-2xl">
             <div className="text-center mb-12">
                 <h1 className="text-5xl font-heading font-bold text-white mb-6">Whitelist <span className="text-primary">Application</span></h1>
                 <p className="text-xl text-muted-foreground">Join our community by showing us your roleplay capability.</p>

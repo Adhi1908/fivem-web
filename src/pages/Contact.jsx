@@ -6,7 +6,7 @@ import { Mail, MessageSquare } from "lucide-react";
 
 const Contact = () => {
     return (
-        <div className="pt-24 pb-20 container mx-auto px-4 max-w-5xl">
+        <div className="pt-32 pb-20 container mx-auto px-4 max-w-5xl">
             <div className="text-center mb-16">
                 <h1 className="text-5xl font-heading font-bold text-white mb-6">Contact <span className="text-primary">Support</span></h1>
                 <p className="text-xl text-muted-foreground">Need help? Reach out to our team.</p>

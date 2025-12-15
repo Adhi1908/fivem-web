@@ -1,13 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const AnimatedCounter = ({ value }) => {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px" });
-    const numericValue = parseInt(value.toString().replace(/[^0-9]/g, ''));
+    const inView = useInView(ref, { once: true, margin: "-50px" });
+    const [hasAnimated, setHasAnimated] = useState(false);
+
+    // Extract numeric value properly
+    const numericValue = parseInt(value.toString().match(/\d+/)?.[0] || '0');
 
     useEffect(() => {
-        if (!inView) return;
+        if (!inView || hasAnimated) return;
+        setHasAnimated(true);
 
         let start = 0;
         const duration = 2000;
@@ -32,7 +36,7 @@ const AnimatedCounter = ({ value }) => {
         };
 
         requestAnimationFrame(animate);
-    }, [inView, numericValue, value]);
+    }, [inView, hasAnimated, numericValue, value]);
 
     return <span ref={ref} className="tabular-nums font-mono text-primary font-bold text-4xl">0</span>;
 };
@@ -46,11 +50,17 @@ const stats = [
 
 const StatsBanner = () => {
     return (
-        <section className="border-y border-white/5 bg-black/40 backdrop-blur-md relative z-40">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
+        <section className="relative z-40 py-8">
+            {/* Glass Background Strip */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+            <div className="container mx-auto px-4 relative">
+                <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-primary/10">
                     {stats.map((stat, idx) => (
-                        <div key={idx} className="py-10 text-center group hover:bg-white/5 transition-colors duration-500">
+                        <div key={idx} className="py-6 text-center group hover:bg-primary/5 transition-all duration-500 relative">
+                            <div className="absolute inset-0 bg-primary/20 blur-[50px] opacity-0 group-hover:opacity-50 transition-opacity duration-700" />
                             <motion.div
                                 initial={{ scale: 0.5, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
@@ -65,8 +75,10 @@ const StatsBanner = () => {
                         </div>
                     ))}
                 </div>
+
+
             </div>
-        </section>
+        </section >
     );
 };
 

@@ -42,7 +42,7 @@ const BentoFeatures = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {features.map((feature, i) => (
-                        <SpotlightCard key={i} className={cn("group p-10 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.3)]", feature.className)}>
+                        <SpotlightCard key={i} className={cn("group p-10 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.3)] bg-black/40 backdrop-blur-md border-white/5", feature.className)}>
                             <div>
                                 <div className="mb-8 inline-flex p-4 rounded-2xl bg-white/5 text-primary group-hover:text-white group-hover:bg-primary group-hover:scale-110 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(0,240,255,0.2)]">
                                     <feature.icon className="w-8 h-8" />
@@ -57,7 +57,7 @@ const BentoFeatures = () => {
                     ))}
 
                     {/* Large Visual Card */}
-                    <SpotlightCard className="md:col-span-3 min-h-[400px] flex items-center justify-center relative overflow-hidden group hover:shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)] border-accent/20">
+                    <SpotlightCard className="md:col-span-3 min-h-[400px] flex items-center justify-center relative overflow-hidden group hover:shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)] border-white/5 bg-black/40 backdrop-blur-md">
                         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
                         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                         <div className="relative z-10 text-center p-8">

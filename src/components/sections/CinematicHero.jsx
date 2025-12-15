@@ -1,10 +1,14 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { Play, ArrowRight } from "lucide-react";
+import { Play, ArrowRight, Copy, Check } from "lucide-react";
+import MagneticButton from "@/components/ui/MagneticButton";
+import GlitchText from "@/components/ui/GlitchText";
+import { useToast } from "@/context/ToastContext";
 
 const CinematicHero = () => {
     const containerRef = useRef(null);
+    const { addToast } = useToast();
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"],
@@ -12,6 +16,11 @@ const CinematicHero = () => {
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+    const handleCopyIp = () => {
+        navigator.clipboard.writeText("play.nexus-rp.com");
+        addToast("Server IP Copied to Clipboard!", "success");
+    };
 
     return (
         <div ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
@@ -34,6 +43,15 @@ const CinematicHero = () => {
                 </video>
             </motion.div>
 
+            {/* Depth Layers */}
+            <motion.div
+                style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
+                className="absolute inset-0 z-20 pointer-events-none"
+            >
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[100px] animate-pulse-slow" />
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+            </motion.div>
+
             {/* Content Layer */}
             <div className="relative z-30 container mx-auto px-4 flex flex-col items-center text-center">
 
@@ -44,12 +62,12 @@ const CinematicHero = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="mb-8 overflow-hidden rounded-full p-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 >
-                    <div className="bg-black/50 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/10 flex items-center gap-2">
+                    <div className="bg-red-500/20 backdrop-blur-md rounded-full px-4 py-1.5 border border-red-500/30 flex items-center gap-2">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                         </span>
-                        <span className="text-xs font-mono tracking-widest text-primary uppercase">System Online v3.0</span>
+                        <span className="text-xs font-mono tracking-widest text-red-100 uppercase">Holiday Event Active 🎄</span>
                     </div>
                 </motion.div>
 
@@ -61,7 +79,7 @@ const CinematicHero = () => {
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                         className="text-7xl md:text-9xl font-heading font-extrabold tracking-tighter text-white mix-blend-overlay"
                     >
-                        NEXUS
+                        <GlitchText>NEXUS</GlitchText>
                     </motion.h1>
                     <motion.h1
                         initial={{ y: 100 }}
@@ -79,8 +97,8 @@ const CinematicHero = () => {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-xl md:text-2xl text-white/60 max-w-2xl font-light mb-10 leading-relaxed font-sans"
                 >
-                    Forget everything you know about FiveM. <br />
-                    <span className="text-white">Enter a world where your choices echo forever.</span>
+                    Winter has arrived in Los Santos. <br />
+                    <span className="text-white">Experience the magic of NexusRP this holiday season.</span>
                 </motion.p>
 
                 {/* Magnetic Buttons */}
@@ -90,13 +108,15 @@ const CinematicHero = () => {
                     transition={{ duration: 0.5, delay: 0.6 }}
                     className="flex flex-col sm:flex-row items-center gap-6"
                 >
-                    <Button size="lg" className="h-16 px-8 text-lg bg-white text-black hover:bg-white/90 shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] border-none rounded-full">
-                        <Play className="mr-2 w-5 h-5 fill-current" />
-                        Start Playing
-                    </Button>
-                    <Button size="lg" variant="outline" className="h-16 px-8 text-lg border-white/20 hover:bg-white/5 rounded-full backdrop-blur-sm">
+                    <MagneticButton onClick={handleCopyIp} size="lg" className="h-16 px-8 text-lg bg-white text-black hover:bg-white/90 shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] border-none rounded-full group">
+                        <Play className="mr-2 w-5 h-5 fill-current group-hover:hidden" />
+                        <Copy className="mr-2 w-5 h-5 hidden group-hover:block" />
+                        <span className="group-hover:hidden">Start Playing</span>
+                        <span className="hidden group-hover:inline">Copy Server IP</span>
+                    </MagneticButton>
+                    <MagneticButton size="lg" variant="outline" className="h-16 px-8 text-lg border-white/20 hover:bg-white/5 rounded-full backdrop-blur-sm">
                         Join Community <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
+                    </MagneticButton>
                 </motion.div>
             </div>
 

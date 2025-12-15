@@ -35,7 +35,7 @@ const Rules = () => {
     const [openSection, setOpenSection] = useState("1.0 Respect & Toxicity");
 
     return (
-        <div className="pt-24 pb-20 container mx-auto px-4">
+        <div className="pt-32 pb-20 container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-16">
                 <h1 className="text-5xl font-heading font-bold text-white mb-6">Server <span className="text-primary">Rules</span></h1>
                 <p className="text-xl text-muted-foreground">Familiarize yourself with our laws to ensure a great experience for everyone.</p>

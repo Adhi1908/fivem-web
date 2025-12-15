@@ -59,8 +59,7 @@ const SpotlightCard = ({ children, className = "" }) => {
             onMouseLeave={handleMouseLeave}
             style={{
                 transformStyle: "preserve-3d",
-                rotateX,
-                rotateY,
+                transform: useMotionTemplate`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
             }}
             className={cn(
                 "relative overflow-hidden rounded-xl border border-white/10 bg-white/5 transition-transform duration-200 ease-out",

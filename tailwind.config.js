@@ -40,6 +40,7 @@ export default {
       animation: {
         'spin-slow': 'spin 12s linear infinite',
         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow-safe': 'spin 20s linear infinite',
         'blob': 'blob 7s infinite',
         'shimmer': 'shimmer 2.5s linear infinite',
       },

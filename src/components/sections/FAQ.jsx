@@ -25,7 +25,9 @@ const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="py-24 container mx-auto px-4">
+        <section className="py-24 container mx-auto px-4 relative">
+            <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+
             <div className="grid md:grid-cols-2 gap-12 items-start">
                 <div className="sticky top-24">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">

@@ -8,12 +8,13 @@ import Rules from "@/pages/Rules";
 import Store from "@/pages/Store";
 import Apply from "@/pages/Apply";
 import Contact from "@/pages/Contact";
-import CustomCursor from "@/components/ui/CustomCursor";
+import ScrollToTop from "@/components/utils/ScrollToTop";
+
 
 function App() {
   return (
     <Router>
-      <CustomCursor />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
