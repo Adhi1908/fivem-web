@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 export const AccordionItem = ({ title, children, isOpen, onToggle, variant = "default" }) => {
     return (
         <div className={cn(
-            "border border-white/10 rounded-lg overflow-hidden transition-all duration-300",
-            isOpen ? "bg-white/5 border-primary/30" : "bg-black/20 hover:bg-white/5"
+            "border border-white/10 rounded-lg overflow-hidden transition-all duration-300 backdrop-blur-md",
+            isOpen ? "bg-white/10 border-primary/50 shadow-[0_0_15px_-5px_rgba(0,240,255,0.2)]" : "bg-black/30 hover:bg-white/5 hover:border-white/20"
         )}>
             <button
                 onClick={onToggle}

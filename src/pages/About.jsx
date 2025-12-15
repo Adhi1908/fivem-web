@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/Card";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 const teamForAbout = [
     { name: "Alex", role: "Owner / Dev", image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" },
@@ -26,7 +26,7 @@ const About = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-xl text-muted-foreground max-w-2xl mx-auto"
+                        className="text-xl text-white/60 max-w-2xl mx-auto font-light"
                     >
                         Built by roleplayers, for roleplayers. Our mission is to create the most immersive and story-diven environment in FiveM.
                     </motion.p>
@@ -37,17 +37,17 @@ const About = () => {
             <section className="py-16">
                 <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
                     <div className="space-y-6">
-                        <h2 className="text-3xl font-heading font-bold text-white">Our Story</h2>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <h2 className="text-4xl font-heading font-bold text-white">Our Story</h2>
+                        <p className="text-white/60 leading-relaxed font-light text-lg">
                             NexusRP started in 2023 with a simple vision: to break the mold of "pay-to-win" servers and focus purely on narrative-driven roleplay.
                         </p>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <p className="text-white/60 leading-relaxed font-light text-lg">
                             We've spent thousands of hours developing custom frameworks, unique jobs, and a balanced economy. Every script is optimized for performance, ensuring your immersion is never broken by technical issues.
                         </p>
                     </div>
-                    <div className="relative h-[400px] rounded-2xl overflow-hidden glass neo-glow">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20" />
-                        <div className="absolute inset-0 flex items-center justify-center text-white/10 font-heading text-9xl font-bold">
+                    <div className="relative h-[400px] rounded-2xl overflow-hidden border border-white/10 group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20 opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                        <div className="absolute inset-0 flex items-center justify-center text-white/5 font-heading text-9xl font-bold select-none">
                             2024
                         </div>
                     </div>
@@ -55,20 +55,18 @@ const About = () => {
             </section>
 
             {/* Team Section */}
-            <section className="py-20 bg-black/20">
+            <section className="py-20 bg-black/40 backdrop-blur-sm">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-heading font-bold text-white text-center mb-12">Meet the Team</h2>
+                    <h2 className="text-4xl font-heading font-bold text-white text-center mb-16">Meet the Team</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                         {teamForAbout.map((member, idx) => (
-                            <Card key={idx} className="text-center group hover:border-primary/50 transition-colors">
-                                <CardContent className="pt-6">
-                                    <div className="w-24 h-24 mx-auto rounded-full bg-white/5 mb-4 overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors">
-                                        <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
-                                    <p className="text-sm text-primary/80">{member.role}</p>
-                                </CardContent>
-                            </Card>
+                            <SpotlightCard key={idx} className="text-center p-8 group">
+                                <div className="w-24 h-24 mx-auto rounded-full bg-white/5 mb-6 overflow-hidden border-2 border-transparent group-hover:border-primary transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]">
+                                    <img src={member.image} alt={member.name} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                                </div>
+                                <h3 className="text-xl font-bold text-white mb-2 font-heading">{member.name}</h3>
+                                <p className="text-sm text-primary uppercase tracking-widest">{member.role}</p>
+                            </SpotlightCard>
                         ))}
                     </div>
                 </div>

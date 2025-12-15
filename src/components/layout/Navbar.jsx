@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Gamepad2 } from "lucide-react";
+import { Menu, X, Rocket } from "lucide-react";
 import { Button } from "../ui/Button";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Magnetic from "../ui/Magnetic";
 
 const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     const navLinks = [
         { name: "Home", path: "/" },
@@ -16,30 +23,28 @@ const Navbar = () => {
         { name: "Features", path: "/features" },
         { name: "Rules", path: "/rules" },
         { name: "Store", path: "/store" },
+        { name: "Contact", path: "/contact" },
     ];
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
     return (
-        <nav
+        <motion.nav
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.5 }}
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                isScrolled ? "bg-background/80 backdrop-blur-md border-b border-white/10 h-20" : "bg-transparent h-24"
+                "fixed w-full z-50 transition-all duration-300 border-b",
+                scrolled
+                    ? "bg-background/80 backdrop-blur-xl border-white/5 py-4"
+                    : "bg-transparent border-transparent py-6"
             )}
         >
-            <div className="container mx-auto px-4 h-full flex items-center justify-between">
+            <div className="container mx-auto px-4 flex justify-between items-center">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] transition-shadow">
-                        <Gamepad2 className="text-white w-6 h-6" />
+                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-black font-bold text-xl group-hover:rotate-12 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.5)]">
+                        <Rocket size={24} />
                     </div>
-                    <span className="text-2xl font-heading font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80 group-hover:from-primary group-hover:to-accent transition-all duration-300">
+                    <span className="text-2xl font-bold font-heading text-white tracking-tighter">
                         NEXUS<span className="text-primary">RP</span>
                     </span>
                 </Link>
@@ -47,73 +52,77 @@ const Navbar = () => {
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <Link
-                            key={link.path}
-                            to={link.path}
-                            className={cn(
-                                "text-sm font-medium tracking-wide hover:text-primary transition-colors relative",
-                                location.pathname === link.path ? "text-primary" : "text-muted-foreground"
-                            )}
-                        >
-                            {link.name}
-                            {location.pathname === link.path && (
-                                <motion.div
-                                    layoutId="navbar-indicator"
-                                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary shadow-[0_0_10px_rgba(0,240,255,0.8)]"
-                                    transition={{ duration: 0.3 }}
-                                />
-                            )}
-                        </Link>
+                        <Magnetic key={link.name}>
+                            <Link
+                                to={link.path}
+                                className="relative text-sm font-medium text-white/70 hover:text-white transition-colors py-2 block px-2"
+                            >
+                                {link.name}
+                                {location.pathname === link.path && (
+                                    <motion.div
+                                        layoutId="underline"
+                                        className="absolute left-0 top-full block h-[2px] w-full bg-primary shadow-[0_0_10px_rgba(0,240,255,0.8)]"
+                                    />
+                                )}
+                            </Link>
+                        </Magnetic>
                     ))}
                 </div>
 
-                {/* CTAs */}
-                <div className="hidden md:flex items-center gap-4">
-                    <Button variant="ghost" size="sm" onClick={() => window.open('https://discord.gg', '_blank')}>
-                        Discord
-                    </Button>
-                    <Button variant="primary" size="sm" className="shadow-[0_0_20px_rgba(0,240,255,0.3)]">
-                        Play Now
-                    </Button>
+                {/* CTA */}
+                <div className="hidden md:block">
+                    <Magnetic>
+                        <Link to="/apply">
+                            <Button variant="glow" size="sm" className="rounded-full px-6">
+                                Play Now
+                            </Button>
+                        </Link>
+                    </Magnetic>
                 </div>
 
-                {/* Mobile Toggle */}
+                {/* Mobile Menu Toggle */}
                 <button
-                    className="md:hidden text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden text-white hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(!isOpen)}
                 >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
+                    {isOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </div>
 
             {/* Mobile Menu */}
             <AnimatePresence>
-                {isMobileMenuOpen && (
+                {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 p-6 md:hidden flex flex-col gap-4 shadow-2xl"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "100vh" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/10 overflow-hidden"
                     >
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                to={link.path}
-                                className={cn(
-                                    "text-lg font-medium p-2 rounded-md hover:bg-white/5",
-                                    location.pathname === link.path ? "text-primary bg-primary/10" : "text-muted-foreground"
-                                )}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                {link.name}
+                        <div className="flex flex-col items-center justify-center h-full gap-8 pb-20">
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.name}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                >
+                                    <Link
+                                        to={link.path}
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-3xl font-heading font-bond text-white hover:text-primary transition-colors"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                            <Link to="/apply" onClick={() => setIsOpen(false)}>
+                                <Button size="lg" className="w-48 mt-4">Join Server</Button>
                             </Link>
-                        ))}
-                        <div className="h-px bg-white/10 my-2" />
-                        <Button className="w-full">Play Now</Button>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </nav>
+        </motion.nav>
     );
 };
 

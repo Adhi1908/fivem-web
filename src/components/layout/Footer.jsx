@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Gamepad2, Twitter, Youtube, Disc } from "lucide-react";
+import { Gamepad2, Twitter, Youtube, Disc, ArrowRight } from "lucide-react";
 
 const Footer = () => {
     return (
@@ -44,16 +44,30 @@ const Footer = () => {
                     </div>
 
                     {/* Socials */}
+                    {/* Newsletter */}
                     <div>
-                        <h4 className="text-white font-bold mb-4">Connect</h4>
+                        <h4 className="text-white font-bold mb-4">Stay Updated</h4>
+                        <p className="text-sm text-muted-foreground mb-4">
+                            Subscribe to our newsletter for server updates and events.
+                        </p>
+                        <div className="flex gap-2 mb-6">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary/50 w-full hover:bg-white/10 transition-colors"
+                            />
+                            <button className="bg-primary hover:bg-primary/90 text-black p-2 rounded-lg transition-colors">
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
                         <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
                                 <Disc className="w-5 h-5" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
                                 <Twitter className="w-5 h-5" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all">
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all hover:scale-110">
                                 <Youtube className="w-5 h-5" />
                             </a>
                         </div>
