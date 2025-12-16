@@ -26,7 +26,12 @@ const Snowfall = () => {
         handleResize();
 
         const snowflakes = [];
-        const snowflakeCount = 100;
+        const isMobile = window.innerWidth < 768;
+        const snowflakeCount = isMobile ? 30 : 100;
+
+        // Respect Reduced Motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
 
         class Snowflake {
             constructor() {

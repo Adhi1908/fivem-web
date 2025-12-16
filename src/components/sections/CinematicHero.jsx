@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Play, ArrowRight, Copy, Check } from "lucide-react";
@@ -8,11 +8,17 @@ import { useToast } from "@/context/ToastContext";
 
 const CinematicHero = () => {
     const containerRef = useRef(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [videoError, setVideoError] = useState(false);
     const { addToast } = useToast();
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"],
     });
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
@@ -25,22 +31,28 @@ const CinematicHero = () => {
     return (
         <div ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
             {/* Background Video Layer */}
+            {/* Background Video Layer */}
             <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-black/40 z-10" /> {/* Darker Overlay for contrast */}
                 {/* Gradient Mesh Overlay */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-background/80 to-background z-20 opacity-60 mix-blend-overlay" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-20" />
 
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover opacity-60"
-                    poster="https://images.unsplash.com/photo-1605218427306-022ba951ddb2?q=80&w=2671&auto=format&fit=crop"
-                >
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-city-traffic-at-night-aerial-view-37580-large.mp4" type="video/mp4" />
-                </video>
+                {videoError ? (
+                    <div className="absolute inset-0 bg-gradient-to-br from-black via-red-950/20 to-black transition-opacity duration-1000" />
+                ) : (
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover opacity-60"
+                        poster="https://images.unsplash.com/photo-1605218427306-022ba951ddb2?q=80&w=2671&auto=format&fit=crop"
+                        onError={() => setVideoError(true)}
+                    >
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-city-traffic-at-night-aerial-view-37580-large.mp4" type="video/mp4" />
+                    </video>
+                )}
             </motion.div>
 
             {/* Depth Layers */}
@@ -57,9 +69,9 @@ const CinematicHero = () => {
 
                 {/* Animated Badge */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-8 overflow-hidden rounded-full p-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 >
                     <div className="bg-red-500/20 backdrop-blur-md rounded-full px-4 py-1.5 border border-red-500/30 flex items-center gap-2">
@@ -74,17 +86,17 @@ const CinematicHero = () => {
                 {/* Glitch Headline */}
                 <div className="overflow-hidden mb-6">
                     <motion.h1
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        initial={{ y: 150 }}
+                        animate={isLoaded ? { y: 0 } : { y: 150 }}
+                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                         className="text-7xl md:text-9xl font-heading font-extrabold tracking-tighter text-white mix-blend-overlay"
                     >
                         <GlitchText>NEXUS</GlitchText>
                     </motion.h1>
                     <motion.h1
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                        initial={{ y: 150 }}
+                        animate={isLoaded ? { y: 0 } : { y: 150 }}
+                        transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="text-7xl md:text-9xl font-heading font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/0 -mt-2 md:-mt-6"
                     >
                         ROLEPLAY
@@ -92,9 +104,9 @@ const CinematicHero = () => {
                 </div>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-xl md:text-2xl text-white/60 max-w-2xl font-light mb-10 leading-relaxed font-sans"
                 >
                     Winter has arrived in Los Santos. <br />
@@ -104,8 +116,8 @@ const CinematicHero = () => {
                 {/* Magnetic Buttons */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
+                    animate={isLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5, delay: 0.8 }}
                     className="flex flex-col sm:flex-row items-center gap-6"
                 >
                     <MagneticButton onClick={handleCopyIp} size="lg" className="h-16 px-8 text-lg bg-white text-black hover:bg-white/90 shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] border-none rounded-full group">

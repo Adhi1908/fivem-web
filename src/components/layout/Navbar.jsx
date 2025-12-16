@@ -22,7 +22,6 @@ const Navbar = () => {
         { name: "About", path: "/about", icon: Info },
         { name: "Features", path: "/features", icon: Zap },
         { name: "Rules", path: "/rules", icon: ScrollText },
-        { name: "Store", path: "/store", icon: ShoppingBag },
         { name: "Contact", path: "/contact", icon: MessageSquare },
     ];
 
@@ -47,7 +46,6 @@ const Navbar = () => {
                     </div>
                     <span className="text-2xl font-bold font-heading text-white tracking-tighter">
                         NEXUS<span className="text-red-500">RP</span>
-                        <span className="text-xs ml-2 bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full border border-green-500/30">XMAS</span>
                     </span>
                 </Link>
 
@@ -59,7 +57,7 @@ const Navbar = () => {
                                 to={link.path}
                                 className={cn(
                                     "relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300",
-                                    location.pathname === link.path ? "text-purple-400" : "text-white/60 hover:text-white"
+                                    location.pathname === link.path ? "text-red-400" : "text-white/60 hover:text-white"
                                 )}
                             >
                                 <link.icon size={18} />
@@ -69,13 +67,13 @@ const Navbar = () => {
                                         {/* Background Glow */}
                                         <motion.div
                                             layoutId="activeTab"
-                                            className="absolute inset-0 bg-purple-600/20 rounded-xl -z-10 shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                                            className="absolute inset-0 bg-red-600/20 rounded-xl -z-10 shadow-[0_0_20px_rgba(220,38,38,0.2)]"
                                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                         />
                                         {/* Top Indicator */}
                                         <motion.div
                                             layoutId="activeIndicator"
-                                            className="absolute -top-[10px] inset-x-0 mx-auto w-5 h-1 bg-purple-500 rounded-full shadow-[0_0_8px_#a855f7]"
+                                            className="absolute -top-[10px] inset-x-0 mx-auto w-5 h-1 bg-red-500 rounded-full shadow-[0_0_8px_#ef4444]"
                                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                         />
                                     </>

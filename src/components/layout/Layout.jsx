@@ -7,6 +7,7 @@ import PageTransition from "./PageTransition";
 import ParticleBackground from "./ParticleBackground";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import Snowfall from "@/components/ui/Snowfall";
+import BackToTop from "@/components/ui/BackToTop";
 
 const Layout = () => {
     useEffect(() => {
@@ -42,6 +43,7 @@ const Layout = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[150px] opacity-30" />
             </div>
 
+            <BackToTop />
             <Navbar />
             <main className="flex-grow">
                 <PageTransition>

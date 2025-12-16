@@ -59,40 +59,56 @@ const Features = () => {
                 </motion.p>
             </div>
 
-            {/* Tabs */}
-            <div className="flex justify-center flex-wrap gap-4 mb-16">
-                {featureCategories.map((cat, i) => (
-                    <Button
-                        key={cat.id}
-                        variant={activeTab === cat.id ? "primary" : "ghost"}
-                        onClick={() => setActiveTab(cat.id)}
-                        className={cn(
-                            "min-w-[140px] transition-all duration-300",
-                            activeTab === cat.id ? "shadow-[0_0_20px_-5px_rgba(0,240,255,0.4)]" : "text-white/50 hover:text-white"
-                        )}
-                    >
-                        {cat.name}
-                    </Button>
-                ))}
+            {/* Premium Animated Tabs */}
+            <div className="flex justify-center mb-16">
+                <div className="relative flex p-1 bg-white/5 backdrop-blur-2xl rounded-full border border-white/10 shadow-2xl">
+                    {featureCategories.map((cat) => (
+                        <button
+                            key={cat.id}
+                            onClick={() => setActiveTab(cat.id)}
+                            className={cn(
+                                "relative px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-all duration-300 z-10",
+                                activeTab === cat.id ? "text-white" : "text-white/40 hover:text-white/80"
+                            )}
+                        >
+                            {activeTab === cat.id && (
+                                <motion.div
+                                    layoutId="activeTabFeatures"
+                                    className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-900 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.5)] -z-10"
+                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                />
+                            )}
+                            <span className="uppercase tracking-widest">{cat.name}</span>
+                        </button>
+                    ))}
+                </div>
             </div>
 
-            {/* Grid */}
+            {/* Premium Grid */}
             <AnimatePresence mode="wait">
                 <motion.div
                     key={activeTab}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     {featureCategories.find(c => c.id === activeTab).items.map((item, idx) => (
-                        <SpotlightCard key={idx} className="h-full p-8 group hover:bg-white/5 transition-colors duration-500">
-                            <div className={cn("w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500", item.color)}>
+                        <SpotlightCard key={idx} className="h-full p-8 group border-white/5 bg-zinc-900/50 hover:bg-zinc-900/80 transition-all duration-500 hover:-translate-y-2">
+
+                            {/* Colorful Glow Effect behind Icon */}
+                            <div className={cn("absolute top-8 left-8 w-16 h-16 rounded-full blur-[40px] opacity-0 group-hover:opacity-40 transition-opacity duration-500", item.color.replace('text-', 'bg-'))} />
+
+                            <div className={cn("relative w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/5 group-hover:border-white/20", item.color)}>
                                 <item.icon className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-3 font-heading">{item.title}</h3>
-                            <p className="text-white/50 leading-relaxed font-light">{item.desc}</p>
+
+                            <h3 className="text-2xl font-bold text-white mb-3 font-sans uppercase tracking-wide group-hover:text-red-500 transition-colors">{item.title}</h3>
+                            <p className="text-white/50 leading-relaxed font-light text-sm">{item.desc}</p>
+
+                            {/* Bottom colored line */}
+                            <div className={cn("absolute bottom-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-r from-transparent via-current to-transparent", item.color)} />
                         </SpotlightCard>
                     ))}
                 </motion.div>

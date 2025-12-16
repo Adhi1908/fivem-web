@@ -44,7 +44,7 @@ const About = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        <h1 className="text-5xl md:text-8xl font-sans font-black text-white mb-8 tracking-widest uppercase drop-shadow-2xl">
+                        <h1 className="text-5xl md:text-8xl font-sans font-black text-white mb-8 tracking-widest uppercase drop-shadow-2xl flex items-center justify-center gap-4">
                             About <ShinyText text="NEXUSRP" speed={3} className="text-red-500 drop-shadow-[0_0_30px_rgba(220,38,38,0.6)]" />
                         </h1>
                     </motion.div>
